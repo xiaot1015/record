@@ -1,4 +1,5 @@
 ### mac 环境搭建  软件安装
+该文档中所有软件和命令都是基于max os 系统
 
 #### 翻墙软件 xx-next 
 
@@ -29,7 +30,38 @@ brew 基本命令
 > brew deps        显示包依赖
 
 #### php + nginx + mysql 环境
-> 安装完成软件之后 配置环境。
+安装完成软件之后 配置环境。
+首先安装依赖
+
+> brew tap homebrew/dupes
+> brew tap josegonzalez/homebrew-php
+
+安装php
+
+> brew install php55 --with-imap --with-tidy --with-debug --with-mysql --with-fpm
+> 
+
+将php-fpm 加入开机启动
+
+> mkdir -p ~/Library/LaunchAgents
+cp /usr/local/opt/php54/homebrew.mxcl.php54.plist ~/Library/LaunchAgents/
+launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.php54.plist
+
+mac nginx 配置php时需要 将fastcgi_param 参数替换成$document_root
+
+```bash```
+location / {
+              if (!-e $request_filename) {
+                    rewrite  ^/admin.php(.*)$  /admin.php?s=$1  last;
+                  break;
+              }
+              fastcgi_pass   127.0.0.1:9000;
+              fastcgi_index  index.php;
+              fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+              include        fastcgi_params;
+}
+```
+
 
 ```php```
 function test(){
@@ -52,7 +84,6 @@ fi
 
 #### 安装sublime text 3 和 markdown editing 插件
 [sublime text 3](https://www.sublimetext.com/3)  点击下载
-
 
 
 
