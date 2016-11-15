@@ -85,6 +85,10 @@ fi
 #### 安装sublime text 3 和 markdown editing 插件
 [sublime text 3](https://www.sublimetext.com/3)  点击下载
 
+#### shell 文件转码命令
+iconv -f gbk -t utf8 filename
+
+dos2unix filename    
 
 
 
